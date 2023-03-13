@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'monitoring' => [
+        'token' => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+        'timeout' => 5,
+        'period' => 1,
+    ]
 ];
