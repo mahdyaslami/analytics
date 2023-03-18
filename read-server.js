@@ -21,5 +21,5 @@ const echo = new Echo({
 const channel = echo.channel('webserver')
 
 channel.listen('.log', (data) => {
-    console.info(data)
+    console.info(data.message)
 })
