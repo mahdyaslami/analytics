@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/profile', 'update')->name('update');
         Route::delete('/profile', 'destroy')->name('destroy');
     });
+
+    Route::get('hosts', [HostController::class, 'index'])->name('hosts');
 });
 
 require __DIR__ . '/auth.php';
