@@ -20,7 +20,8 @@ class ReadServerCommand extends Command
         while ($reader->running()) {
             $output = trim($reader->latestOutput());
 
-            if (strlen($output)) {
+            if ($len = strlen($output)) {
+                $this->line('Read '.$len.' bytes');
                 WebserverLog::parse($output);
             }
 
