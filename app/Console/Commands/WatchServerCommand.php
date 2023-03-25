@@ -44,6 +44,10 @@ class WatchServerCommand extends Command
             $this->info('Run '.ucfirst($title).' process');
             $this->ps[$title] = $process->start();
         }
+
+        $this->info('Wait 5 seconds for processes');
+        sleep(5);
+        $this->info('Start');
     }
 
     public function tasks()
