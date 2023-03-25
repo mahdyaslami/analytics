@@ -9,6 +9,9 @@ class WebserverLog extends Model
 {
     use HasFactory;
 
+    const CREATED_AT = 'time_local';
+    const UPDATED_AT = null;
+
     public static function parse(string $text)
     {
         $lines = explode("\n", $text);
