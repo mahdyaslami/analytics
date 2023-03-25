@@ -29,8 +29,13 @@ class WatchServerCommand extends Command
 
     private function init()
     {
-        $this->ps['websockets'] = Process::command(['php', base_path('artisan'), 'websockets:serve']);
+        $this->ps['websockets'] = Process::command(['php', base_path('artisan'), 'websockets:serve', '--port='.$this->port()]);
         $this->ps['tail'] = Process::command(['tail', '-f', config('services.webserver.log')]);
+    }
+
+    private function port()
+    {
+        return config('broadcasting.connections.'.config('broadcasting.default').'.options.port');
     }
 
     private function start()
@@ -56,7 +61,7 @@ class WatchServerCommand extends Command
         foreach ($this->ps as $title => $process) {
             $output = $process->latestOutput();
             $errorOutput = $process->latestErrorOutput();
-            
+
             if (strlen($output) > 0 || strlen($errorOutput) > 0) {
                 $this->error('Errors for '.ucfirst($title).' process:');
                 $this->line($process->latestOutput());
