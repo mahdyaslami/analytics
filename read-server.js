@@ -23,3 +23,6 @@ const channel = echo.channel('webserver')
 channel.listen('.log', (data) => {
     console.info(data.message)
 })
+
+echo.connector.pusher.connection.bind('disconnected', () => echo.disconnect());
+echo.connector.pusher.connection.bind('unavailable', () => echo.disconnect());
