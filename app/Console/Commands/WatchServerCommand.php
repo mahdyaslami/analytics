@@ -93,7 +93,7 @@ class WatchServerCommand extends Command
         $output = $this->ps['tail']->latestOutput();
 
         if ($len = strlen($output)) {
-            $this->info('Read '.$len.' bytes');
+            $this->info(now().' Read '.$len.' bytes');
             event(new WebserverLog($output));
         }
     }
