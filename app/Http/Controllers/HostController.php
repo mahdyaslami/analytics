@@ -12,4 +12,11 @@ class HostController extends Controller
 
         return inertia('Hosts', compact('hosts'));
     }
+
+    public function logs(string $host)
+    {
+        $logs = WebserverLog::whereHost($host)->orderByDesc('time_local')->paginate(30);
+
+        return inertia('Hosts/Logs', compact('logs'));
+    }
 }
