@@ -37,7 +37,7 @@ const tableHeaders = [
                     >
                         <template #actions="{ item }">
                             <Link
-                                :href="item.title"
+                                :href="route('hosts.logs',item.title)"
                                 class="mr-2 bg-amber-500 text-white px-2 py-1 rounded-lg text-sm"
                             >
                                 Logs
