@@ -35,7 +35,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/profile', 'destroy')->name('destroy');
     });
 
-    Route::get('hosts', [HostController::class, 'index'])->name('hosts');
+    Route::name('hosts.')->prefix('hosts')->controller(HostController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('{host}/logs', 'logs')->name('logs');
+    });
 });
 
 require __DIR__ . '/auth.php';
