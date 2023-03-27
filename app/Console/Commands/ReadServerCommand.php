@@ -14,22 +14,22 @@ class ReadServerCommand extends Command
 
     public function handle(): void
     {
-        $reader = Process::command(['node', base_path('read-server.js')]);
+        $pendingReader = Process::command(['node', base_path('read-server.js')]);
         $retry = 0;
 
         while ($retry++ < 5) {
             $this->info('Starting to read server');
-            $reader = $reader->start();
+            $invokedReader = $pendingReader->start();
 
             $this->info('Wait 5 seconds for process');
             sleep(5);
 
-            if ($reader->running()) {
+            if ($invokedReader?->running()) {
                 $retry = 0;
             }
 
-            while ($reader->running()) {
-                $output = trim($reader->latestOutput());
+            while ($invokedReader?->running()) {
+                $output = trim($invokedReader->latestOutput());
 
                 if ($len = strlen($output)) {
                     $this->line('Read '.$len.' bytes');
