@@ -1,7 +1,6 @@
 <template>
     <section class="flex flex-row my-4 max-w-7xl mx-auto sm:px-6 lg:px-8" dir="ltr">
-        <div class="flex w-1/3">
-            <!-- bg-gray-100 hover:text-gray-500 -->
+        <div class="flex w-2/12">
             <InertiaLink
                 v-if="prev?.url"
                 :href="prev?.url"
@@ -13,11 +12,11 @@
             </InertiaLink>
         </div>
 
-        <nav class="flex items-center mx-auto w-1/3">
+        <nav class="flex items-center mx-auto w-8/12 justify-center">
             <ul class="flex flex-row items-center">
                 <li v-for="page in getLinks" :key="page">
                     <InertiaLink
-                        :href="page.url"
+                        :href="page?.url || '#'"
                         class="px-4 py-2 mx-1 rounded-lg leading-tight text-gray-500 hover:bg-gray-100
                                 hover:text-gray-700"
                         :class="{ 'bg-white shadow':page.active }"
@@ -28,7 +27,7 @@
             </ul>
         </nav>
 
-        <div class="flex w-1/3">
+        <div class="flex w-2/12">
             <InertiaLink
                 v-if="next?.url"
                 :href="next?.url"
