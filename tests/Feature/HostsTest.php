@@ -7,7 +7,7 @@ use Tests\TestCase;
 
 class HostsTest extends TestCase
 {
-    public function test_guest_user_cant_visit_hosts_page(): void
+    public function test_guest_cant_visit_hosts_page(): void
     {
         $this->request()->assertRedirect(route('login'));
     }
@@ -18,7 +18,7 @@ class HostsTest extends TestCase
 
         $hosts = WebserverLog::factory(10)->create()->sortBy('host')->map(fn ($wl) => ['title' => $wl->host]);
 
-        $this->get(route('hosts'))
+        $this->request()
             ->assertOk()
             ->assertViewHas('page.component', 'Hosts')
             ->assertViewHas('page.props.hosts', $hosts->values()->toArray());
@@ -26,6 +26,6 @@ class HostsTest extends TestCase
 
     private function request()
     {
-        return $this->get(route('hosts'));
+        return $this->get(route('hosts.index'));
     }
 }
