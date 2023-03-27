@@ -12,6 +12,7 @@ defineProps({
 
 const tableHeaders = [
     { value: 'Title', key: 'title' },
+    { value: 'Logs count', key: 'logs_count' },
 ]
 
 </script>
