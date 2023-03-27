@@ -22,6 +22,15 @@ const tableHeaders = [
     { value: 'Referer', key: 'referer' },
     { value: 'User agent', key: 'user_agent' },
 ]
+
+function formatDate(date) {
+    return (new Date(date)).toLocaleDateString('en-IR', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+    })
+}
 </script>
 
 <template>
@@ -41,7 +50,11 @@ const tableHeaders = [
                         :head="tableHeaders"
                         :body="logs.data"
                         countable
-                    />
+                    >
+                        <template #time_local="{item}">
+                            {{ formatDate(item.time_local) }}
+                        </template>
+                    </BaseTable>
                 </div>
 
                 <Pagination :meta="logs" />
