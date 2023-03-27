@@ -30,6 +30,15 @@ const props = defineProps({
         type: Boolean,
         required: false,
     },
+    countableDescending: {
+        type: Boolean,
+        required: false,
+    },
+    count: {
+        type: Number,
+        required: false,
+        default: Number.MAX_SAFE_INTEGER,
+    },
     selectable: {
         type: Boolean,
         required: false,
@@ -54,14 +63,9 @@ function pluck(arr, key) {
     return arr.map((i) => i[key])
 }
 
-function isFirstPage() {
-    return route().params.page == null || route().params.page == 1
-}
-
-function getNumber(number) {
-    return !isFirstPage()
-        ? number + ((route().params.page - 1) * props.perPage)
-        : number
+function getRowNumber(number) {
+    const page = route().params.page || 1
+    return number + ((page - 1) * props.perPage)
 }
 </script>
 
@@ -69,7 +73,7 @@ function getNumber(number) {
     <table class="min-w-full" dir="ltr">
         <thead class="border-gray-200 bg-gray-50">
             <tr class="text-left text-xs leading-4 text-gray-500">
-                <th v-if="countable" class="px-6 py-3 font-medium uppercase tracking-wider">
+                <th v-if="countable || countableDescending" class="px-6 py-3 font-medium uppercase tracking-wider">
                     #
                 </th>
 
@@ -96,7 +100,11 @@ function getNumber(number) {
                 class="border-gray-200 border-y"
             >
                 <td v-if="countable" class="px-6 py-4">
-                    {{ getNumber(++index) }}
+                    {{ getRowNumber(index+1) }}
+                </td>
+
+                <td v-if="countableDescending" class="px-6 py-4">
+                    {{ count - getRowNumber(index) }}
                 </td>
 
                 <td v-if="selectable" class="px-6 py-3">
@@ -128,7 +136,7 @@ function getNumber(number) {
 
         <tfoot class="border-gray-200 bg-gray-50">
             <tr class="text-left text-xs leading-4 text-gray-500">
-                <th v-if="countable" class="px-6 py-3 font-medium uppercase tracking-wider">
+                <th v-if="countable || countableDescending" class="px-6 py-3 font-medium uppercase tracking-wider">
                     #
                 </th>
 

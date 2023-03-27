@@ -49,7 +49,9 @@ function formatDate(date) {
                     <BaseTable
                         :head="tableHeaders"
                         :body="logs.data"
-                        countable
+                        :count="logs.total"
+                        :per-page="logs.per_page"
+                        countable-descending
                     >
                         <template #time_local="{item}">
                             {{ formatDate(item.time_local) }}
