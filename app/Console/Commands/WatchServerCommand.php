@@ -30,7 +30,7 @@ class WatchServerCommand extends Command
     private function init()
     {
         $this->ps['websockets'] = Process::command(['php', base_path('artisan'), 'websockets:serve', '--port='.$this->port()]);
-        $this->ps['tail'] = Process::command(['tail', '-f', config('services.webserver.log')]);
+        $this->ps['tail'] = Process::command(['tail', '-F', config('services.webserver.log')]);
     }
 
     private function port()
