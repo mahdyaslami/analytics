@@ -14,7 +14,7 @@ class ReadServerCommand extends Command
 
     public function handle(): void
     {
-        $pendingReader = Process::command(['node', base_path('read-server.js')]);
+        $pendingReader = Process::path(base_path())->command(['node', 'read-server.js']);
         $retry = 0;
 
         while ($retry++ < 5) {
@@ -26,6 +26,9 @@ class ReadServerCommand extends Command
 
             if ($invokedReader?->running()) {
                 $retry = 0;
+            } else {
+                $this->info($invokedReader->latestOutput());
+                $this->info($invokedReader->latestErrorOutput());
             }
 
             while ($invokedReader?->running()) {
