@@ -64,7 +64,7 @@ function pluck(arr, key) {
 }
 
 function getRowNumber(number) {
-    const page = route().params.page || 1
+    const page = Number(route().params.page || 1)
     return number + ((page - 1) * props.perPage)
 }
 </script>
@@ -100,7 +100,7 @@ function getRowNumber(number) {
                 class="border-gray-200 border-y"
             >
                 <td v-if="countable" class="px-6 py-4">
-                    {{ getRowNumber(index+1) }}
+                    {{ getRowNumber(Number(index) + 1) }}
                 </td>
 
                 <td v-if="countableDescending" class="px-6 py-4">
