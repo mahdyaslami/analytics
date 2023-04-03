@@ -19,7 +19,16 @@ class HostController extends Controller
 
     public function logs(string $host, HostLogsRequest $request)
     {
-        $logs = WebserverLog::whereHost($host)->orderByDesc('time_local')->paginate(30);
+        $logs = WebserverLog::whereHost($host)
+            ->when($request->filters, function ($query) use ($request) {
+                $request->filters->each(
+                    fn ($f) => $query->where($f->column, $f->search)
+                );
+
+                return $query;
+            })
+            ->orderByDesc('time_local')
+            ->paginate(30);
 
         return inertia('Hosts/Logs', compact('logs'));
     }

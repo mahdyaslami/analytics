@@ -38,6 +38,14 @@ class HostLogsFilterTest extends TestCase
         $this->request(':foo:bar & baring:foo2:bar2 on bar:foo3:bar3')->assertValid('filters');
     }
 
+    public function test_filter_logs(): void
+    {
+        WebserverLog::factory()->create();
+        $logs = WebserverLog::factory(5)->create(['host' => $this->host, 'status' => 404])->sortByDesc('time_local');
+
+        $this->request(':status:404')->assertOk()->assertViewHas('page.props.logs.data', $logs->values()->toArray());
+    }
+
     private function request(string $filters = null)
     {
         $filters = urlencode($filters);
