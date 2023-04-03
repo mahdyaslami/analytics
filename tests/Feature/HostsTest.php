@@ -16,7 +16,10 @@ class HostsTest extends TestCase
     {
         $this->login();
 
-        $hosts = WebserverLog::factory(10)->create()->sortBy('host')->map(fn ($wl) => ['title' => $wl->host]);
+        $hosts = WebserverLog::factory(10)
+            ->create()
+            ->map(fn ($wl) => ['title' => $wl->host, 'logs_count' => 1])
+            ->sortByDesc('title');
 
         $this->request()
             ->assertOk()
