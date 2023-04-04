@@ -22,7 +22,7 @@ class HostController extends Controller
         $logs = WebserverLog::whereHost($host)
             ->when($request->filters, function ($query) use ($request) {
                 $request->filters->each(
-                    fn ($f) => $query->where($f->column, $f->search)
+                    fn ($f) => $query->where($f->column, 'like', $f->search)
                 );
 
                 return $query;
