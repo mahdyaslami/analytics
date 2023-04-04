@@ -1,8 +1,11 @@
 <script setup>
-import { Head } from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import BaseTable from '@/Components/BaseTable'
 import Pagination from '@/Components/Pagination'
+import TextInput from '@/Components/TextInput'
+import InputError from '@/Components/InputError'
+import PrimaryButton from '@/Components/PrimaryButton'
 import { computed } from 'vue'
 
 const logsData = computed(
@@ -11,6 +14,10 @@ const logsData = computed(
         request: parseRequest(l),
     }))
 )
+
+const form = useForm({
+    filters: route().params.filters || '',
+})
 
 const props = defineProps({
     logs: {
@@ -31,13 +38,15 @@ const tableHeaders = [
     { value: 'User agent', key: 'user_agent' },
 ]
 
-function formatDate(date) {
-    return (new Date(date)).toLocaleDateString('en-IR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-    })
+function formatDate(timestamp) {
+    const d = new Date(timestamp)
+
+    const twoDigits = (number) => number.toString().padStart(2, 0)
+
+    const date = `${d.getFullYear()}-${twoDigits(d.getMonth() + 1)}-${twoDigits(d.getDate())}`
+    const time = `${twoDigits(d.getHours())}:${twoDigits(d.getMinutes())}:${twoDigits(d.getSeconds())}`
+
+    return `${date} ${time}`
 }
 
 function parseRequest(log) {
@@ -49,6 +58,14 @@ function parseRequest(log) {
         url: `http://${log.host}${route}`,
     }
 }
+
+const search = () => {
+    if (form.filters.trim() == '') {
+        delete form.filters
+    }
+
+    form.get(route('hosts.logs', route().params.host))
+}
 </script>
 
 <template>
@@ -56,9 +73,32 @@ function parseRequest(log) {
         <Head :title="route().params.host" />
 
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Logs of {{ route().params.host }}
-            </h2>
+            <div class="flex flex-row">
+                <h2 class="flex font-semibold text-xl text-gray-800 leading-tight w-2/3">
+                    Logs of {{ route().params.host }}
+                </h2>
+
+                <h2 class="flex flex-col w-1/3">
+                    <form class="flex flex-row justify-end" @submit.prevent="search">
+                        <TextInput
+                            id="filters"
+                            v-model="form.filters"
+                            placeholder="Filter by :column:search"
+                            type="text"
+                        />
+
+                        <PrimaryButton
+                            class="ml-4"
+                            :class="{ 'opacity-25': form.processing }"
+                            :disabled="form.processing"
+                        >
+                            Search
+                        </PrimaryButton>
+                    </form>
+
+                    <InputError class="flex mt-2 justify-center" :message="form.errors.filters" />
+                </h2>
+            </div>
         </template>
 
         <div class="py-12">

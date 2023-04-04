@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\HostLogs;
 
 use App\Models\WebserverLog;
 use Tests\TestCase;
