@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class HostLogsRequest extends FormRequest
 {
-    const FILTERS_FORMAT = '/(:\w+:[^:]+)/';
+    const FILTERS_FORMAT = '/(:[^:]+:[^:]+)/';
 
     private $matches;
 
