@@ -28,7 +28,8 @@ class HostController extends Controller
                 return $query;
             })
             ->orderByDesc('time_local')
-            ->paginate(30);
+            ->paginate(30)
+            ->appends($request->query());
 
         return inertia('Hosts/Logs', compact('logs'));
     }
