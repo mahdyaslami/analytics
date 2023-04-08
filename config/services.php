@@ -34,5 +34,6 @@ return [
     'webserver' => [
         'log' => env('WEBSERVER_LOG'),
         'period' => env('WEBSERVER_PERIOD'),
+        'timeout' => env('WEBSERVER_TIMEOUT'),
     ],
 ];
