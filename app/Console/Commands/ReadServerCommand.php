@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Process;
 
 class ReadServerCommand extends Command
 {
-    protected $signature = 'server:read';
+    protected $signature = 'server:read {ip}';
 
     protected $description = 'Read server logs';
 
     public function handle(): void
     {
-        $pendingReader = Process::path(base_path())->command(['node', 'read-server.js']);
+        $pendingReader = Process::path(base_path())->command(['node', 'read-server.js', $this->argument('ip')]);
         $retry = 0;
 
         while ($retry++ < 5) {

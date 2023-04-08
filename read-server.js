@@ -6,7 +6,7 @@ const Echo = require('laravel-echo').default
 const options = {
     broadcaster: 'pusher',
     key: process.env.PUSHER_APP_KEY,
-    wsHost: process.env.PUSHER_SERVER_HOST,
+    wsHost: process.argv[2],
     wsPort: process.env.PUSHER_PORT,
     forceTLS: process.env.PUSHER_SCHEME == 'https',
     disableStats: true,
