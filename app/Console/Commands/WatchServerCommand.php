@@ -81,8 +81,8 @@ class WatchServerCommand extends Command
 
             if (strlen($output) > 0 || strlen($errorOutput) > 0) {
                 $this->error('Errors for '.ucfirst($title).' process:');
-                $this->line($process->latestOutput());
-                $this->line($process->latestErrorOutput());
+                $this->line($output);
+                $this->line($errorOutput);
             }
         }
     }
