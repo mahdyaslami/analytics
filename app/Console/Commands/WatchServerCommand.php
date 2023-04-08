@@ -14,17 +14,29 @@ class WatchServerCommand extends Command
 
     protected $ps = [];
 
+    protected $time = 0;
+
     public function handle(): void
     {
         $this->init();
         $this->start();
 
-        while ($this->running()) {
+        while ($this->running() && !$this->timeout()) {
             $this->tasks();
             $this->wait();
         }
 
         $this->printErrors();
+    }
+
+    public function timeout()
+    {
+        if ((time() - $this->time) > config('services.webserver.timeout')) {
+            $this->error('Timeout');
+            return true;
+        }
+
+        return false;
     }
 
     private function init()
@@ -48,6 +60,7 @@ class WatchServerCommand extends Command
         $this->info('Wait 1 seconds for processes');
         sleep(1);
         $this->info('Start');
+        $this->time = time();
     }
 
     public function tasks()
@@ -95,6 +108,7 @@ class WatchServerCommand extends Command
         if ($len = strlen($output)) {
             $this->info(now().' Read '.$len.' bytes');
             event(new WebserverLog($output));
+            $this->time = time();
         }
     }
 }
