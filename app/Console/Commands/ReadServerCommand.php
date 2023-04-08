@@ -21,8 +21,8 @@ class ReadServerCommand extends Command
             $this->info('Starting to read server');
             $invokedReader = $pendingReader->start();
 
-            $this->info('Wait 5 seconds for process');
-            sleep(5);
+            $this->info('Wait 1 seconds for process');
+            sleep(1);
 
             if ($invokedReader?->running()) {
                 $retry = 0;
