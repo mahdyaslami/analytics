@@ -36,7 +36,7 @@ class ReadServerCommand extends Command
 
                 if ($len = strlen($output)) {
                     $this->line('Read '.$len.' bytes');
-                    WebserverLog::parse($output);
+                    WebserverLog::parse($output, ['server_ip' => $this->argument('ip')]);
                 }
 
                 $this->wait();
