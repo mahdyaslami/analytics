@@ -14,6 +14,7 @@ class WebserverLogFactory extends Factory
         $url = (object) parse_url(fake()->url);
 
         return [
+            'server_ip' => fake()->ipv4,
             'host' => $url->host,
             'port' => fake()->randomNumber(4),
             'remote_addr' => fake()->ipv4,

@@ -5,7 +5,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
     modelValue: {
-        type: [Object, Array, Boolean, Number],
+        type: [Object, Array, Boolean, Number, String],
         default: false,
     },
     value: {

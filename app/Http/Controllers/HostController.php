@@ -10,9 +10,9 @@ class HostController extends Controller
 {
     public function index()
     {
-        $hosts = WebserverLog::groupBy('host')
+        $hosts = WebserverLog::groupBy('server_ip', 'host')
             ->orderByDesc('logs_count', 'desc')
-            ->get(['host as title', DB::raw('count(*) as logs_count')]);
+            ->get(['host as title', 'server_ip', DB::raw('count(*) as logs_count')]);
 
         return inertia('Hosts', compact('hosts'));
     }
