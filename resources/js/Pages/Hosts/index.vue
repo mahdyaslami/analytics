@@ -34,11 +34,11 @@ const tableHeaders = [
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="flex flex-row justify-center p-4">
+                    <div class="flex flex-row flex-wrap p-4">
                         <div
                             v-for="serverIp in new Set(hosts.map((h) => h.server_ip))"
                             :key="serverIp"
-                            class="flex flex-row mx-2 hover:bg-slate-100 rounded-lg py-1 px-2"
+                            class="flex flex-row mx-2 hover:bg-slate-100 rounded-lg py-1 px-2 w-1/6"
                         >
                             <RadioButton
                                 :id="serverIp"
