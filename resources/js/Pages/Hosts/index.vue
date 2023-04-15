@@ -3,9 +3,18 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import BaseTable from '@/Components/BaseTable'
 import RadioButton from '@/Components/RadioButton'
 import { Head, Link } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-const selectedServer = ref(props.hosts[0].server_ip)
+const selectedServer = ref(
+    (new URL(window.location)).searchParams.get('server_ip') ??
+    props.hosts[0].server_ip
+)
+
+watch(selectedServer, (value) => {
+    const url = new URL(window.location)
+    url.searchParams.set('server_ip', value)
+    window.history.pushState(null, '', url.toString())
+})
 
 const props = defineProps({
     hosts: {
