@@ -9,6 +9,6 @@ class WebserverLogSeeder extends Seeder
 {
     public function run(): void
     {
-        WebserverLog::factory(100)->create();
+        WebserverLog::factory(20)->create();
     }
 }
