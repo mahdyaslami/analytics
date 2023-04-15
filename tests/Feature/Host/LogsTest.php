@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\HostLogs;
+namespace Tests\Feature\Host;
 
 use App\Models\WebserverLog;
 use Tests\TestCase;
 
-class HostLogsTest extends TestCase
+class LogsTest extends TestCase
 {
     private $host;
 

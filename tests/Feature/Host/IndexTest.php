@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Host;
 
 use App\Models\WebserverLog;
 use Tests\TestCase;
 
-class HostsTest extends TestCase
+class IndexTest extends TestCase
 {
     public function test_guest_cant_visit_hosts_page(): void
     {
