@@ -21,7 +21,7 @@ class WatchServerCommand extends Command
         $this->init();
         $this->start();
 
-        while ($this->running() && !$this->timeout()) {
+        while ($this->running() && ! $this->timeout()) {
             $this->tasks();
             $this->wait();
         }
@@ -33,6 +33,7 @@ class WatchServerCommand extends Command
     {
         if ((time() - $this->time) > config('services.webserver.timeout')) {
             $this->error('Timeout');
+
             return true;
         }
 
@@ -107,7 +108,11 @@ class WatchServerCommand extends Command
 
         if ($len = strlen($output)) {
             $this->info(now().' Read '.$len.' bytes');
-            event(new WebserverLog($output));
+
+            $this->info(json_encode(
+                event(new WebserverLog($output))
+            ));
+
             $this->time = time();
         }
     }
